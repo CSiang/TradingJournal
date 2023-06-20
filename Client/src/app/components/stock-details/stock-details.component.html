@@ -1,0 +1,118 @@
+
+<h1 class="word-center" style="color: red;" *ngIf="message">
+    {{message}}
+</h1>
+
+<div *ngIf="GenInfo" style="padding-left: 5%; padding-right: 5%;">
+    <br>
+    <div style="display: flex; margin: 10px 0px 15px 0px;">
+        <div style="width: 55%;">
+            <h1> {{GenInfo.longName}}   ({{GenInfo.symbol}})</h1>
+        </div>
+        <div style="width: 45%; text-align: right">
+            <button style="margin-right: 5px;" mat-raised-button color="primary" (click)="addRecord()">
+                <mat-icon>add</mat-icon>Record
+            </button>
+            <button style="margin-right: 5px;" mat-raised-button color="primary" [routerLink]="['/search']">
+                New Search
+            </button>
+            <button mat-raised-button color="primary" [routerLink]="['/']">Fundamental Analysis</button>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div style="display: flex; justify-content:space-between">
+        <div>
+            <h4>Address:</h4>
+        </div>
+        <div style="margin: 8px">
+            <span style="display: block" *ngIf="GenInfo.address1">{{GenInfo.address1}}</span>
+            <span style="display: block" *ngIf="GenInfo.address2">{{GenInfo.address2}}</span>
+            <span style="display: block" *ngIf="GenInfo.city">{{GenInfo.city}}</span>
+            <span *ngIf="GenInfo.zip">{{GenInfo.zip}}</span>
+            <span *ngIf="GenInfo.country"> {{GenInfo.country}}</span>
+        </div>
+        <div style="margin-left: 5px;">
+            <h4>Phone:</h4>
+            <h4>Website:</h4>
+        </div>
+        <div style="margin: 8px">
+            <span style="display: block" *ngIf="GenInfo.phone">{{GenInfo.phone}}</span>
+            <span style="display: block; margin-top: 9px;">{{GenInfo.website? GenInfo.website:'Not available'}}</span>
+        </div>
+        <div>
+            <h4>Trading Timezone:</h4>
+            <h4>Industry:</h4>
+            <h4>Sector:</h4>
+        </div>
+        <div style="margin: 8px">
+            <span style="display: block;">{{GenInfo.timeZone? GenInfo.timeZone:'Not available'}}</span>
+            <span style="display: block;margin-top:8px;">{{GenInfo.industry? GenInfo.industry:'Not available'}}</span>
+            <span style="display: block;margin-top:8px;">{{GenInfo.sector? GenInfo.sector:'Not available'}}</span>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="GenInfo.businessSummary">
+            <h4>Business Summary:</h4>
+            <p style="padding: 5px">{{GenInfo.businessSummary}}</p>
+    </div>
+
+    <div style="display: flex; justify-content:space-around;">
+        <div style="margin-left: 25px; margin-right: 50px;">
+            <table>
+                <tr>
+                    <th>Market Capital:</th>
+                    <td>{{GenInfo.finOverview.marketCap ? GenInfo.finOverview.marketCap : 'Not Available'}}</td>
+                </tr>
+                <tr>
+                    <th>52 Weeks High:</th>
+                    <td>{{GenInfo.finOverview.fifty2WeekHigh ? GenInfo.finOverview.fifty2WeekHigh : 'Not Available'}}</td>
+                </tr>
+                <tr>
+                    <th>52 Weeks Low:</th>
+                    <td>{{GenInfo.finOverview.fifty2WeekLow ? GenInfo.finOverview.fifty2WeekLow : 'Not Available'}}</td>
+                </tr>
+                <tr>
+                    <th>Average Volume (10 Days):</th>
+                    <td>{{GenInfo.finOverview.averageDailyVol10Days ? GenInfo.finOverview.averageDailyVol10Days : 'Not Available'}}</td>
+                </tr>
+                <tr>
+                    <th >Average Volume (3 Months):</th>
+                    <td>{{GenInfo.finOverview.averageVol3Months ? GenInfo.finOverview.averageVol3Months : 'Not Available'}}</td>
+                </tr>
+                <tr>
+                    <th>Beta:</th>
+                    <td>{{GenInfo.finOverview.beta ? GenInfo.finOverview.beta : 'Not Available'}}</td>
+                </tr>
+            </table>
+        </div>
+        <div style="margin-left: 25px; margin-right: 50px;">
+            <table>
+                <tr>
+                    <th>Trailing PE Ratio:</th>
+                    <td>{{GenInfo.finOverview.trailingPE ? GenInfo.finOverview.trailingPE : 'Not Available'}}</td>
+                </tr>
+                <tr>
+                    <th>Dividend:</th>
+                    <td>{{GenInfo.finOverview.dividend ? GenInfo.finOverview.dividend : 'Not Available'}}</td>
+                </tr>
+                <tr>
+                    <th>Ex-Dividend Date:</th>
+                    <td>{{GenInfo.finOverview.exDividendDate ? (GenInfo.finOverview.exDividendDate | date :'dd-MMM-yyyy')
+                        :'Not Available'}} </td>                   
+                </tr>
+                <tr>
+                    <th>Average 5 Years Dividend:</th>
+                    <td>{{GenInfo.finOverview.aveDivYield5Years ? GenInfo.finOverview.aveDivYield5Years : 'Not Available'}}</td>
+                </tr>
+                <tr>
+                    <th>Dividend Payout Ratio:</th>
+                    <td>{{GenInfo.finOverview.payoutRatio ? GenInfo.finOverview.payoutRatio : 'Not Available'}}</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+
+

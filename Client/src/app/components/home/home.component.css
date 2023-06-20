@@ -1,0 +1,40 @@
+
+.center {
+    position:absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hor-center{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.content{
+    padding: 30px;
+}
+
+.content:nth-child(even){
+    background-color: rgba(106, 99, 99, 0.1);
+}
+
+
+
+table{
+    table-layout: fixed;
+    width:80vw;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    background-color: antiquewhite;
+}
+
+th{
+    background-color: thistle;
+}

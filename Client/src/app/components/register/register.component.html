@@ -1,0 +1,49 @@
+
+<div class="center">
+    <h1>Registration</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div>
+            <div>
+                <mat-form-field class="example-full-width" appearance="fill" [style.width.px]="327">
+                    <mat-label>Name</mat-label>
+                    <input size="50" matInput placeholder="Enter your name" type="text" formControlName="name">
+                    <span *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)" class="alert">
+                        Name must be more than 3 characters.
+                    </span>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="example-full-width" appearance="fill" [style.width.px]="327">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Enter your email" type="email" formControlName="email">
+                    <span *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)" class="alert">
+                        Please enter valid email
+                    </span>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="example-full-width" appearance="fill" [style.width.px]="327">
+                    <mat-label>Username</mat-label>
+                    <input matInput placeholder="Enter your preferred username" type="text" formControlName="username">
+                    <span *ngIf="form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)" class="alert">
+                        Please enter username with minimum 2 characters.
+                    </span>
+                </mat-form-field>
+
+            </div>
+            <div>
+                <mat-form-field class="example-full-width" appearance="fill" [style.width.px]="327">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Enter your password" type="text" formControlName="password">
+                    <span *ngIf="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)" class="alert">
+                        Password must be of 8 characters minimum.
+                    </span>
+                </mat-form-field>
+
+            </div>
+            <button mat-raised-button color="primary" [disabled]="form.invalid" >Submit</button>
+        </div>
+    </form>
+
+</div>
+

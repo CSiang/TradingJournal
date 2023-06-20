@@ -1,0 +1,78 @@
+.navbar{
+    display: flex;
+    flex: 1 1 auto;
+    justify-content:space-between
+}
+
+.drop-down{
+    display: inline-block;
+}
+
+.drop-down:hover{
+    color:blue;
+    display: inline-block;
+    background-color: thistle;
+}
+
+.drop-down .drop-down-hidden{
+    display: none;
+    margin-left: -4px;
+    position:absolute;
+    background-color: thistle;
+    width: 500px;
+    left:-30px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 0;
+}
+
+a:hover .drop-down-hidden{
+    display: block;
+}
+
+.drop-down:hover .drop-down-hidden, .drop-down-hidden:hover{
+    display: block;
+}
+
+.hover-icon{
+    display: inline-block
+}
+
+.negative-icon{
+    display: none;
+}
+
+.drop-down:hover .positive-icon{
+    display:none
+}
+
+.drop-down:hover .negative-icon{
+    display:block
+}
+
+.btn-dropDown{
+    color: blue;
+    font-weight:700;
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    padding: 10px 0px 10px 10px;
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-family: Calibri;
+    cursor:pointer;
+    width:100%
+}
+
+.btn-dropDown:hover{
+    color:aliceblue;
+    background-color:blueviolet;
+}
+
+.btn-dropDown:disabled{
+    color:grey;
+    background: none;
+}
+
+

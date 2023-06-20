@@ -1,0 +1,277 @@
+
+<!-- This is for record addition -->
+<div style="margin: 20px;">
+    <div>
+        <h1>Trading Records</h1>
+        
+        <ng-template #saveRecordForm>
+            <form [formGroup]="form" (ngSubmit)="saveRecords()">
+                <table style="position:relative; left: 50%; transform: translateX(-50%); width: max-content;" formArrayName="record">
+                    <tr *ngFor="let record of array.controls; let i = index" [formGroupName]="i">
+                        <div>
+                            <p style="font-style: italic; text-decoration:underline; font-size: medium;">
+                                Entry: {{i+1}}
+                            </p>
+                        </div>
+                        <mat-form-field style="width:130px; height: 70px;">
+                            <mat-label style="font-size:small;">Trading Account</mat-label>
+                            <input style="font-size: small;color: blue;" matInput type="text" formControlName="tradingAccount">
+                            <!-- record has error: {{record.get('tradingAccount')?.hasError('required')}} -->
+                            <mat-error *ngIf="record.get('tradingAccount')?.invalid && record.get('tradingAccount')?.dirty">
+                                Required.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field style="width:110px; height: 70px;">
+                            <mat-label style="font-size:small;">Stock Ticker</mat-label>
+                            <input style="font-size: small;color: blue;" matInput type="text" formControlName="stockTicker">
+                            <mat-error *ngIf="record.get('stockTicker')?.invalid && record.get('stockTicker')?.dirty">
+                                Required.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field style="width:150px; height: 70px;">
+                            <mat-label style="font-size:small;">Stock Name</mat-label>
+                            <input style="font-size: small;color: blue;" matInput type="text" formControlName="stockName">
+                            <mat-error *ngIf="record.get('stockName')?.invalid && record.get('stockName')?.dirty">
+                                Required.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field style="width:85px; height: 70px;">
+                            <mat-label style="font-size:small;">Currency</mat-label>
+                            <input style="font-size: small;color: blue;" matInput type="text" formControlName="currency">
+                            <mat-error *ngIf="record.get('currency')?.invalid && record.get('currency')?.dirty">
+                                Required.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field style="width:110px; height: 70px;">
+                            <mat-label style="font-size:small;">Buying Price</mat-label>
+                            <input style="font-size: small;color: blue;" matInput type="text" formControlName="buyPrice">
+                            <mat-error *ngIf="record.get('buyPrice')?.invalid && record.get('buyPrice')?.dirty">
+                                Minimum $0.0001</mat-error>
+                        </mat-form-field>
+                        <mat-form-field style="width:110px; height: 70px;">
+                            <mat-label style="font-size:small;">Buying Amount</mat-label>
+                            <input style="font-size: small;color: blue;" matInput type="text" formControlName="buyAmount">
+                            <mat-error *ngIf="record.get('buyAmount')?.invalid && record.get('buyAmount')?.dirty">
+                                Minimum 1 unit</mat-error>
+                        </mat-form-field>
+        
+                        <mat-form-field style="width:150px; height: 70px;">
+                            <mat-label>Buy Date</mat-label>
+                            <input style="font-size: small;color:blue" matInput [matDatepicker]="picker" formControlName="buyDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="record.get('buyDate')?.invalid && record.get('buyDate')?.dirty">
+                                Must NOT be later than today.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field style="width:150px; height: 70px;">
+                            <mat-label style="font-size:small;">Transaction($)</mat-label>
+                            <input style="font-size: small;color: blue;" matInput type="text" formControlName="buyTransactionCost">
+                            <mat-error *ngIf="record.get('buyTransactionCost')?.invalid && record.get('buyTransactionCost')?.dirty">
+                                Required.</mat-error>
+                        </mat-form-field>              
+                        <div style="display: inline-block; ">
+                            <button mat-icon-button color="warn" 
+                                    style="position: relative; left: 10px; top:-10px" type="button" (click)="delTask(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </tr>
+                </table>
+                <button mat-raised-button color="primary" type="submit"
+                [disabled]="formValid()">Save Record</button>
+                <a mat-raised-button style="margin: 10px 0px 10px 10px" color="primary" 
+                 (click)="addRecord()"> <mat-icon>add</mat-icon>Record </a>
+                 <a mat-raised-button style="margin: 10px 0px 10px 10px" color="warn" 
+                 (click)="closeAddForm()"> Close </a>
+            </form>
+        </ng-template>
+
+        <div class="overlay" *ngIf="array.length>0">
+            <!-- It is possible to use ngTemplateOutlet in div, but i still use ng-content because ng-content doesn't allow insert any content within the tag. Which if you use the div with ngTemplateOutlet, you place content within div tags, content won't be shown. So using ng-content can prevent mis-placing of desired content into places where content won't be displayed.-->
+            <ng-content *ngTemplateOutlet="saveRecordForm"></ng-content>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- This is to show records table -->
+<div>
+    <div style="margin-left: 20px;">
+        <a mat-raised-button style="margin: 10px" color="primary" 
+            (click)="addRecord()"> <mat-icon>add</mat-icon>Record </a>
+        <mat-form-field style="width: 175px">
+            <mat-label>Holding Status</mat-label>
+            <mat-select value="all" (selectionChange)="changeHoldingStatus(status.value)" #status>
+                <mat-option value="all">All Records</mat-option>
+                <mat-option value="true">Holding</mat-option>
+                <mat-option value="false">Sold</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox [checked]="deleteToggle" (change)="delToggle($event)">
+            Delete Record
+          </mat-checkbox>
+    </div>
+
+    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- <table mat-table [dataSource]="records" class="mat-elevation-z8"> -->
+        <!-- Stock Ticker Column -->
+    <ng-container matColumnDef="stockTicker">
+        <th mat-header-cell *matHeaderCellDef>Stock Ticker</th>
+        <td mat-cell *matCellDef="let record"> {{record.stockTicker}} </td>
+    </ng-container>
+        <!-- Stock Name Column -->
+        <ng-container matColumnDef="stockName">
+        <th mat-header-cell *matHeaderCellDef>Stock Name</th>
+        <td mat-cell *matCellDef="let record"> {{record.stockName}} </td>
+        </ng-container>
+        <!-- Currency Column -->
+        <ng-container matColumnDef="currency">
+            <th mat-header-cell *matHeaderCellDef>Currency</th>
+            <td mat-cell *matCellDef="let record"> {{record.currency}} </td>
+        </ng-container>
+        <!-- Buying price Column -->
+        <ng-container matColumnDef="buyPrice">
+            <th mat-header-cell *matHeaderCellDef>Buy Price</th>
+            <td mat-cell *matCellDef="let record"> {{record.buyPrice}} </td>
+        </ng-container>
+        <!-- Selling price Column -->
+        <ng-container matColumnDef="sellPrice">
+            <th mat-header-cell *matHeaderCellDef>Sell Price</th>
+            <td mat-cell *matCellDef="let record">
+                {{record.sellPrice=="0.0"? "-": record.sellPrice}} </td>
+        </ng-container>
+        <!-- Buy Amount Column -->
+        <ng-container matColumnDef="buyAmount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let record"> {{record.buyAmount | number}} </td>
+        </ng-container>
+        <!-- Buy Date Column -->
+        <ng-container matColumnDef="buyDate">
+            <th mat-header-cell *matHeaderCellDef>Buy Date</th>
+            <td mat-cell *matCellDef="let record"> {{record.buyDate}} </td>
+        </ng-container>
+        <!-- Sell Date Column -->
+        <ng-container matColumnDef="sellDate">
+            <th mat-header-cell *matHeaderCellDef>Sell Date</th>
+            <td mat-cell *matCellDef="let record"> 
+                {{record.sellDate ==""? "-":record.sellDate}} </td>
+        </ng-container>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let record">
+                <!-- This button is to delete the record, activated when triggered. -->
+                <button mat-raised-button color="primary" type="button" class="action-btn"
+                    (click)="deletePrompt(record)" *ngIf="deleteToggle">
+                    <mat-icon>delete</mat-icon>
+                    Remove
+                </button> 
+                <button class="action-btn" mat-raised-button color="primary" type="button" *ngIf="!deleteToggle"
+                (click)="updateRecord(record)">
+                <mat-icon>update</mat-icon>
+                Update</button> 
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>    
+    </table>
+
+    <div class="spinner" *ngIf="dataSource.loading$ | async">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="!(recordCountObs | async)">
+        <h2 style="color: red; font-weight: bolder; text-align: center; margin: 10px;">
+            No Records.
+        </h2>
+    </div>
+    <mat-paginator [length]="recordCountObs | async" 
+    [pageSize]="recordLimit" [pageSizeOptions]="pageSizeOption"></mat-paginator>  
+</div>
+
+<div *ngIf="sellRecord">
+    <div class="pop-up" id="myForm">
+        <h1 style="text-align: center; text-decoration:underline; text-shadow:violet 1px 1px;">Close Trade</h1>
+        <table style="margin-left: auto;margin-right: auto; margin-bottom: 20px;">
+            <tr>
+                <th>Trading Account:</th>
+                <td>{{sellRecord.tradingAccount}}</td>
+            </tr>
+            <tr>
+                <th>Ticker:</th>
+                <td>{{sellRecord.stockTicker}}</td>
+            </tr>
+            <tr>
+                <th>Stock Name:</th>
+                <td>{{sellRecord.stockName}}</td>
+            </tr>
+            <tr>
+                <th>Currency:</th>
+                <td>{{sellRecord.currency}}</td>
+            </tr>
+            <tr>
+                <th>Purchase Price:</th>
+                <td>{{sellRecord.buyPrice}}</td>
+            </tr>
+        </table>
+
+        <form [formGroup]="sellForm">
+            <mat-form-field>
+                <mat-label>Selling Price</mat-label>
+                <input matInput type="number" formControlName="sellPrice">
+                <mat-error *ngIf="sellForm.controls['sellPrice'].invalid && sellForm.controls['sellPrice'].dirty">
+                    Min sell price must be 0.0001</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Selling Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="sellDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="sellForm.controls['sellDate'].invalid && sellForm.controls['sellDate'].dirty ">
+                    Must NOT be later than today.</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Transaction Cost</mat-label>
+                <input matInput type="number" formControlName="sellTransactionCost">
+            </mat-form-field>
+            <div>
+                <button style="margin: 5px;" mat-raised-button color="primary" (click)="closeTrade()">Submit</button>
+                <button style="margin: 5px;" mat-raised-button color="primary" (click)="closeForm()">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div style="padding: 30px;" class="pop-up" id="delConfirm" *ngIf="delRecord">
+    <h1 style="color: red;">Delete The record below?</h1>
+    <table style="margin-left: auto;margin-right: auto; margin-bottom: 20px;">
+        <tr>
+            <th>Trading Account:</th>
+            <td>{{delRecord.tradingAccount}}</td>
+        </tr>
+        <tr>
+            <th>Ticker:</th>
+            <td>{{delRecord.stockTicker}}</td>
+        </tr>
+        <tr>
+            <th>Stock Name:</th>
+            <td>{{delRecord.stockName}}</td>
+        </tr>
+        <tr>
+            <th>Currency:</th>
+            <td>{{delRecord.currency}}</td>
+        </tr>
+        <tr>
+            <th>Purchase Price:</th>
+            <td>{{delRecord.buyPrice}}</td>
+        </tr>
+    </table>
+    <div style="display: flex; justify-content: space-around;">
+        <button mat-raised-button color="primary" type="button" class="action-btn" (click)="deleteRecord()">
+            <mat-icon>delete</mat-icon>
+            Delete
+        </button> 
+        <button mat-raised-button color="primary" type="button" class="action-btn"
+            (click)="cancelDelete()">
+            Cancel
+        </button> 
+    </div>
+</div>

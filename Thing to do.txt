@@ -1,0 +1,9 @@
+
+1. Work on profile
+2. Work on record addition  --> DONE
+3. WOrk on the Redis for as cache after getting info from Yahoo Finance. --> DONE
+4. Work on the home page, which is a summary of the records of the user.
+5. Work on the fundamental analysis report.
+6. Work on the yhFinanceService, getStockPrice method to produce a map of ticker vs price in string format. -> DONE
+7. Test the home page again with BL's account, to observe if it works well with very little records.
+8. Amend my tradingRecord repo so it obtains the records by using user_id value.

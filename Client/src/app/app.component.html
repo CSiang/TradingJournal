@@ -1,0 +1,42 @@
+
+<div >
+    <mat-toolbar color="primary"  style="width: 100%;">
+            <div class="navbar">
+                <div>
+                    <span style="font-size: x-large;">
+                        <mat-icon style="vertical-align: middle;">attach_money</mat-icon>
+                        My Trading Journal
+                    </span>
+                </div>
+                <div>
+                    <a style="font-size: large;" mat-button [routerLink]="'/home'">
+                        <mat-icon>home</mat-icon>Home</a>
+                    <a style="font-size: large;" mat-button [routerLink]="'/search'">
+                        <mat-icon>search</mat-icon>Search</a>
+                    <a style="font-size: large;" mat-button [routerLink]="'/records'">
+                        <mat-icon>library_books</mat-icon>Records</a>
+                    <div class="drop-down">
+                        <a style="font-size: large;" mat-button>
+                            <mat-icon>account_circle</mat-icon>
+                            {{username? 'Hi,' + username : 'User'}}
+                            <div class="hover-icon">
+                                <div class="positive-icon">
+                                    <mat-icon>keyboard_arrow_up</mat-icon>
+                                </div>
+                                <div class="negative-icon">
+                                    <mat-icon>keyboard_arrow_down</mat-icon>
+                                </div>
+                            </div>
+                            <div class="drop-down-hidden">
+                                <button class="btn-dropDown" [routerLink]="'/profile'">Profile</button>
+                                <button class="btn-dropDown" [routerLink]="'/login'" [disabled]="username">Login</button>
+                                <button class="btn-dropDown" [disabled]="!username" (click)="logout()" [routerLink]="'/'">Logout</button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    </mat-toolbar>
+</div>
+
+<router-outlet></router-outlet>

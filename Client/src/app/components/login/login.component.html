@@ -1,0 +1,23 @@
+<div class="center">
+    <div style="text-align: center;">
+        <h2><u><i>Please Log In</i></u></h2>
+    </div>
+    <br>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>User Name</mat-label>
+            <input matInput placeholder="Enter your name" #username>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Enter your password" type="password" #password>
+        </mat-form-field>
+        <button style=" display: block; left: 50%; transform: translateX(-50%); margin-bottom: 30px;" mat-raised-button color="primary" 
+        (click)="submit(username.value, password.value)">
+             Submit
+        </button>
+        <div style="display: flex; flex-direction: column; ">
+            <a [routerLink]="'/register'">Newbie? Sign up here!!!</a>
+            <a [routerLink]="'/forgetPassword'">Forget password? Reset here!!!</a>
+            <h3 *ngIf="content">{{content}}</h3>
+        </div>
+</div>

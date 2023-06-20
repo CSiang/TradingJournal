@@ -1,0 +1,14 @@
+.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+table {
+width: 70%;
+font-size: large;
+}
+
+td, th {
+    text-align: center;
+    padding: 10px;
+}
