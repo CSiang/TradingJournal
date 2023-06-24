@@ -19,6 +19,11 @@ public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     final String GET_USER_BY_EMAIL ="""
             select * from app_user where email = ? ;""";
 
+   final String UPDATE_USER_CALENDAR_ID = """
+            update app_user
+            set calendar_id = ?
+            where id = ? """;
+
     @Modifying()
     @Query(value = UPDATE_USER, nativeQuery = true)
     public void updateUser(String email, String name, String password, String username, Long id);
@@ -27,6 +32,10 @@ public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
     @Query(value = GET_USER_BY_EMAIL, nativeQuery = true)
     public AppUser findByEmail(String email);
+
+    @Modifying()
+    @Query(value = UPDATE_USER_CALENDAR_ID, nativeQuery = true)
+    public void updateUserCalId(String calendarId, Long userId);
 
     Boolean existsByUsername(String username);
   

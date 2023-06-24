@@ -13,14 +13,11 @@ public class EmailService {
 
     // To ensure this work, will have to disable Avast MailShield. It will block email sent by this app.
     public void sendSimpleMessage(String to, String subject, String text) {
-        
         SimpleMailMessage message = new SimpleMailMessage(); 
         message.setFrom("noreply@gmail.com");
         message.setTo(to); 
         message.setSubject(subject); 
         message.setText(text);
         emailSender.send(message);
-        
     }
-
 }

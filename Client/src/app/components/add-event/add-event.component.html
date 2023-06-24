@@ -1,0 +1,49 @@
+
+<div class="center">
+    <h1 style="text-align: center;text-decoration: underline;">Add Event</h1>
+    <form [formGroup]="form">
+        <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-evenly;">
+                <mat-form-field style="width:100%;">
+                    <mat-label>Title</mat-label>
+                    <input matInput type="text" formControlName="summary">
+                    <mat-error *ngIf="form.controls['summary'].invalid && form.controls['summary'].dirty">
+                        Title is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field>
+                <mat-label>Description (Optional)</mat-label>
+                <textarea matInput formControlName="description" placeholder="Detail of the event."></textarea>
+              </mat-form-field>
+            <div style="display: flex; justify-content: space-evenly;">
+                <mat-form-field>
+                    <mat-label>Start</mat-label>
+                    <input matInput [ngxMatDatetimePicker]="picker1" formControlName="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="$any(picker1)"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #picker1>
+                    </ngx-mat-datetime-picker>
+                    <mat-error *ngIf="form.controls['startDate'].invalid && form.controls['startDate'].dirty ">
+                        Start date is required with valid date format.</mat-error>
+                 </mat-form-field>
+                <mat-form-field>
+                    <mat-label>End</mat-label>
+                    <input matInput [ngxMatDatetimePicker]="picker" formControlName="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #picker>
+                    </ngx-mat-datetime-picker>
+                    <!-- <mat-error *ngIf="form.controls['endDate'].invalid && form.controls['endDate'].dirty ">
+                        Start date is required with valid date format.</mat-error>
+                    <span class="error" *ngIf="form.controls['endDate'].invalid && form.controls['endDate'].dirty ">
+                        End date is required.</span> -->
+                    <span class="error" *ngIf="form.controls['endDate'].value < form.controls['startDate'].value  && form.controls['startDate'].dirty ">
+                        End date is required & must be later than start date</span>
+                 </mat-form-field>
+            </div>
+        </div>
+        <div style="display: flex; justify-content:space-evenly;">
+            <button style="margin: 5px; text-align: center;" mat-raised-button color="primary" 
+            (click)="submitForm()" [disabled]="form.invalid">Submit</button>
+            <button style="margin: 5px;text-align: center" mat-raised-button color="primary" [routerLink]="['/home']">Home</button>
+        </div>
+    </form>
+</div>

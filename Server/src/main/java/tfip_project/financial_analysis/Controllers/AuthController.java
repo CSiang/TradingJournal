@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.transaction.Transactional;
 import tfip_project.financial_analysis.Payload.MsgResponse;
 import tfip_project.financial_analysis.Repositories.AppUserRepository;
 import tfip_project.financial_analysis.Repositories.RoleRepository;
 import tfip_project.financial_analysis.Security.Models.AppUser;
 import tfip_project.financial_analysis.Security.Models.Role;
+import tfip_project.financial_analysis.Services.CalendarService;
 import tfip_project.financial_analysis.Services.EmailService;
 import tfip_project.financial_analysis.Services.UserService;
 
@@ -46,8 +48,12 @@ public class AuthController {
     @Autowired
     EmailService emailSvc;
 
+    @Autowired
+    CalendarService calSvc;
+
     
     @PostMapping(path = "/register")
+    @Transactional
     public ResponseEntity<MsgResponse> register(@RequestBody AppUser user){
 
         if(userRepo.existsByUsername(user.getUsername())){
@@ -69,7 +75,19 @@ public class AuthController {
 		// role1.setName("USER");
 		// user.getRoles().add(role1);
 
-		userSvc.saveUser(user);
+		AppUser savedUser = userSvc.saveUser(user);
+
+        try{
+            String newCalId = calSvc.createNewCalendar(savedUser.getId());
+            System.out.println(newCalId);
+            userSvc.updateUserCalId(newCalId, savedUser.getId());
+            System.out.println("calendarId has been successfully updated.");
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new MsgResponse("Server error. Please contact your administrator."));
+        }
 
         return ResponseEntity.ok(new MsgResponse("User is saved."));
     }
@@ -96,6 +114,7 @@ public class AuthController {
     }
 
     @PostMapping(path = "update")
+    @Transactional
     public ResponseEntity<MsgResponse> updateProfile(@RequestBody AppUser user){
 
         try{
@@ -146,6 +165,7 @@ public class AuthController {
     } 
 
     @GetMapping(path="resetPassword")
+    @Transactional
     public ResponseEntity<MsgResponse> resetPassword(
         @RequestParam(value = "email") String add, 
         @RequestParam(value="password") String password,

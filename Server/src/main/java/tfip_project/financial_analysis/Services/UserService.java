@@ -94,4 +94,14 @@ public class UserService implements UserDetailsService {
                             user.getUsername(), user.getId());
     }
 
+    public void updateUserCalId(String calendarId, Long userId){
+        try{
+            userRepo.updateUserCalId(calendarId, userId);
+        } catch (Exception ex){
+            System.out.println("Error when updating user calendarId.");
+            ex.printStackTrace();
+        }
+    }
+
+
 }

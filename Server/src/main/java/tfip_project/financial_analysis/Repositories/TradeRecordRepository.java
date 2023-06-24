@@ -33,8 +33,6 @@ public interface TradeRecordRepository extends JpaRepository<TradingRecord, Long
     final String DELETE_BY_ID = """
                     delete from trading_record where user_id = ? and id = ?; """;
 
-        // delete from trading_record where username = 'CS' and id= 16;
-
     final String CLOSE_TRADE = """
                     update trading_record 
                     set sell_price = ?, sell_date = ?, sell_transaction_cost = ?, 

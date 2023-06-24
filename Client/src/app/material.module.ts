@@ -37,6 +37,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+
 @NgModule({
   exports: [
     CdkTableModule,
@@ -78,6 +80,9 @@ import { MatTreeModule } from '@angular/material/tree';
     MatTooltipModule,
     MatTreeModule,
     ScrollingModule,
+    NgxMatDatetimePickerModule, 
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule
   ]
 })
 export class MaterialModule { }

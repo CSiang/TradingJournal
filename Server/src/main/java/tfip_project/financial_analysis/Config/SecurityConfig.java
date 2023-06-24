@@ -25,7 +25,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
+
     @Autowired
     private AuthenticationConfiguration authConfig;
 
@@ -77,7 +77,12 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/auth/users")
                                 .hasAnyAuthority("ADMIN")
                                 );
-        http.authorizeHttpRequests(httpRequest -> httpRequest.anyRequest().authenticated());
+        
+        http.authorizeHttpRequests(httpRequest -> 
+                httpRequest.anyRequest().authenticated()
+        );
+        
+        
 
         http.addFilter(new CustomAuthenticationFilter(this.authenticationManager(authConfig)));
 

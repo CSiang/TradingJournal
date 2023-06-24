@@ -20,6 +20,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { LocalStorageService } from './_helper/LocalStorage.service';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { AddEventComponent } from './components/add-event/add-event.component';
+import { ListEventComponent } from './components/list-event/list-event.component';
+import { EventService } from './Services/EventService';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,9 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     RegisterComponent,
     ProfileComponent,
     ForgetPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ListEventComponent,
+    AddEventComponent
   ],
   imports: [
     BrowserModule,
@@ -40,9 +45,9 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    MaterialModule
   ],
-  providers: [HttpService, AuthService, httpInterceptorProviders, LocalStorageService],
+  providers: [HttpService, AuthService, httpInterceptorProviders, LocalStorageService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -25,6 +25,7 @@ public class AppUser {
     private String username;
     private String email;
     private String password;
+    private String calendarId;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new LinkedList<>();
@@ -66,11 +67,20 @@ public class AppUser {
     public void setUsername(String username) {
         this.username = username;
     }
+    public String getCalendarId() {
+        return calendarId;
+    }
+    public void setCalendarId(String calendarId) {
+        this.calendarId = calendarId;
+    }
+    
     @Override
     public String toString() {
-        return "AppUser [id=" + id + ", name=" + name + ", username=" + username + ", email=" + email + ", roles="
-                + roles + "]";
+        return "AppUser [id=" + id + ", name=" + name + ", username=" + username + ", email=" + email + 
+        ", calendarId=" + calendarId + ", roles=" + roles + "]";
     }
+   
+    
 
 
 

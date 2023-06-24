@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom, merge, tap } from 'rxjs';
 import { nonWhiteSpace, orderDate } from 'src/app/Constants';
 import { TradingRecord } from 'src/app/Models/TradingRecord';
 import { HttpService } from 'src/app/Services/HttpServices';
 import { recordDataSource } from './records.datasource';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-records',
@@ -59,6 +60,7 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadPage();
       }
       )
+
     }
 
   ngOnDestroy(): void {
@@ -240,9 +242,6 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
       complete: () => document.getElementById("myForm")!.style.display = 'none'
     })
 
-    // setTimeout(() => {
-    //   document.getElementById("myForm")!.style.display = 'none'
-    // }, 0);
   }
 }
 
