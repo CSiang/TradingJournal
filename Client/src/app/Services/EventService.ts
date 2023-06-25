@@ -1,6 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { lastValueFrom } from "rxjs";
+import { EventDetail } from "../Models/EventDetail";
 
 const BASE_URL = "http://localhost:8080"
 
@@ -20,6 +21,15 @@ export class EventService{
         }
 
         return lastValueFrom(this.http.post(url, data))
+    }
+
+    getEvent(startDate:string, endDate:string): Promise<EventDetail>{
+        const url = BASE_URL + "/calendar/eventList"
+        const param = new HttpParams()
+                            .set("start", startDate)
+                            .set("end", endDate)
+
+        return lastValueFrom(this.http.get<EventDetail>(url, {params: param}))
     }
 
   

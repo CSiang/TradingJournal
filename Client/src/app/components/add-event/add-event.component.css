@@ -1,9 +1,22 @@
 
 .center{
+    padding: 100%;
+    display: none;
+    background-color:rgba(4, 26, 36, 0.9);
+    /* background-color:rgba(43, 136, 179, 0.9); */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.title{
+    color: blueviolet;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: 550;
+    font-size:25px;
 }
 
 .error{
@@ -14,4 +27,13 @@
 
 mat-form-field{
     margin: 0px 10px 0px 10px;
+}
+
+.content{
+    padding: 30px;
+    background-color:blanchedalmond;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: aquamarine;
+    opacity: 1;
 }

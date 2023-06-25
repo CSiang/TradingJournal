@@ -1,66 +1,67 @@
 
-<div style="margin: 20px;">
-    <div>
-        <div style="display:flex">
-            <div style="width: 70%;">
-                <h1 style="margin-left: 60%;font-weight: 900;">
-                    Trade Summary
-                </h1>
+<div style="display: flex;height: fit-content; padding-bottom: 30px;">  
+    <div style="width: 70%">
+        <div style="margin: 20px;">
+            <div>
+                <div style="display:flex">
+                    <div style="width: 70%;">
+                        <h1 style="margin-left: 60%;font-weight: 900;">
+                            Trade Summary
+                        </h1>
+                    </div>
+                    <div >
+                        <button mat-raised-button color="primary" style="display: inline-block;" (click)="expandAll()">{{toggleButton}} All</button>
+                    </div>
+                </div>
+            </div>        
+            <div class="content" *ngFor="let table of displayList, let idx= index">
+                <h2 style="text-align: center; text-decoration: underline;">{{idx==0? 'Portfolio':'Stock Sold'}}</h2>
+                <div style=" width: fit-content;" class="hor-center" *ngFor="let hold of table, let i= index">
+                        <h3 class="hor-center" style="width: fit-content;">
+                           <span style="color: red;">
+                                {{hold.holding? 'Worth:': 'Return:'}} 
+                           </span> 
+                           <span style="text-decoration: underline; font-weight: bold;">
+                               {{hold.currency}} {{hold.amount | number: '1.0-2'}} 
+                           </span>
+                            <button mat-icon-button color="primary" (click)="tableDisplay(i+idx*10)">
+                                <mat-icon name="iconLess" id="{{ 'button-less-' + (i + idx*10) }}" style="display: contents;">expand_less</mat-icon>
+                                <mat-icon name="iconMore" id="{{ 'button-more-' + (i + idx*10)}}" style="display: none;">expand_more</mat-icon>
+                            </button>
+                        </h3>
+                        <table name="summaryTable" style="display:none" id="{{ 'table-' + (i + idx*10) }}">
+                            <tr>
+                                <th>Stock Name</th>
+                                <th>Symbol</th>
+                                <th>Currency</th>
+                                <th>Total Buy Amount ($)</th>
+                                <th>Total Buy Amount (unit)</th>
+                                <th>{{idx==0?'Total worth ($)' : 'Total return ($)' }}</th>
+                                <th>Current Price($)</th>
+                            </tr>
+                            <tr *ngFor="let summary of (idx==0? holdSummary: soldSummary)">
+                                <ng-container *ngIf="summary.currency == hold.currency">
+                                    <td>{{summary.stockName}}</td>
+                                    <td>{{summary.stockTicker}}</td>
+                                    <td>{{summary.currency}}</td>
+                                    <td>{{summary.totalWorth | number}}</td>
+                                    <td>{{summary.totalUnit}}</td>
+                                    <td>{{summary.stockReturn | number}}</td>
+                                    <td>{{summary.stockPrice | number}}</td>
+                                </ng-container>
+                            </tr>
+                        </table>
+                </div>
             </div>
-            <div >
-                <button mat-raised-button color="primary" style="display: inline-block;" (click)="expandAll()">{{toggleButton}} All</button>
-            </div>
-        </div>
-<!--     
-        <h2 class="hor-center" style="width: fit-content;" (mouseover)="h2MoustOver()" (mouseleave)="h2MoustLeave()" id="title">Portfolio Insight</h2>
-        <h3 style="text-align: center;">Total value: <span style="color:red; background-color: yellow;">
-            [Insert the value of the portfolio]</span>
-        </h3> -->
-    </div>
-
-    <div class="content" *ngFor="let table of displayList, let idx= index">
-        <h2 style="text-align: center; text-decoration: underline;">{{idx==0? 'Portfolio':'Stock Sold'}}</h2>
-        <div style=" width: fit-content;" class="hor-center" *ngFor="let hold of table, let i= index">
-                <h3 class="hor-center" style="width: fit-content;">
-                   <span style="color: red;">
-                        {{hold.holding? 'Worth:': 'Return:'}} 
-                   </span> 
-                   <span style="text-decoration: underline; font-weight: bold;">
-                       {{hold.currency}} {{hold.amount | number: '1.0-2'}} 
-                   </span>
-                    <button mat-icon-button color="primary" (click)="tableDisplay(i+idx*10)">
-                        <mat-icon name="iconLess" id="{{ 'button-less-' + (i + idx*10) }}" style="display: contents;">expand_less</mat-icon>
-                        <mat-icon name="iconMore" id="{{ 'button-more-' + (i + idx*10)}}" style="display: none;">expand_more</mat-icon>
-                    </button>
-                </h3>
-                <table name="summaryTable" style="display:none" id="{{ 'table-' + (i + idx*10) }}">
-                    <tr>
-                        <th>Stock Name</th>
-                        <th>Symbol</th>
-                        <th>Currency</th>
-                        <th>Total Buy Amount ($)</th>
-                        <th>Total Buy Amount (unit)</th>
-                        <th>{{idx==0?'Total worth ($)' : 'Total return ($)' }}</th>
-                        <th>Current Price($)</th>
-                    </tr>
-                    <tr *ngFor="let summary of (idx==0? holdSummary: soldSummary)">
-                        <ng-container *ngIf="summary.currency == hold.currency">
-                            <td>{{summary.stockName}}</td>
-                            <td>{{summary.stockTicker}}</td>
-                            <td>{{summary.currency}}</td>
-                            <td>{{summary.totalWorth | number}}</td>
-                            <td>{{summary.totalUnit}}</td>
-                            <td>{{summary.stockReturn | number}}</td>
-                            <td>{{summary.stockPrice | number}}</td>
-                        </ng-container>
-                    </tr>
-                </table>
-
-
+            <br>
         </div>
     </div>
-    <br>
-
+    <div style="width: 30%">
+        <app-list-event></app-list-event>
+    </div>
 </div>
+
+
+
 
 

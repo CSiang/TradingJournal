@@ -7,3 +7,5 @@
 6. Work on the yhFinanceService, getStockPrice method to produce a map of ticker vs price in string format. -> DONE
 7. Test the home page again with BL's account, to observe if it works well with very little records.
 8. Amend my tradingRecord repo so it obtains the records by using user_id value.
+9. The submitForm() method, which is the event adding http call to server in AddEventComponent has been commented out due to testing, need to uncomment it ltr.
+10. Need to come out with API to delete calendar event, based on the eventId.

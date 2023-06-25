@@ -1,0 +1,81 @@
+
+.content{
+    border-left: 1px solid rgba(0, 255, 174, 0.43);
+    height: 100%;
+    background-color:rgba(43, 150, 179, 0.1);
+    padding-top: 15px;
+}
+
+.error{
+    color: red;
+    font-style: italic;
+}
+
+.table{
+    padding-bottom: 0px;
+    margin: 20px 5px 0px 5px;
+    height:320px;
+    overflow: auto;
+    z-index: 0;
+}
+
+.table th{
+    text-align: center;
+    background-color: skyblue;
+}
+
+.table td{
+    text-align: center;
+}
+
+.popup-background{
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(76, 86, 86, 0.9);
+}
+
+.popup{
+    display: block;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: blueviolet;
+    border-style: ridge;
+    padding: 30px;
+    height: fit-content;
+    width: fit-content;
+    background-color: aliceblue;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popup table{
+    background-color:rgba(40, 199, 199,0.35);
+    border-collapse: collapse;
+    border: 1px solid aqua;
+}
+
+.popup th, .popup td{
+    height:fit-content
+}
+
+.popup th{
+    width: 150px;
+}
+
+.popup td{
+    text-align: center;
+    width: 450px;
+}
+
+.popup tr:nth-child(even){
+    background-color:rgba(40, 199, 199,0.15);
+}

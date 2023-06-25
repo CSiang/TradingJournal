@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RecordSummary } from 'src/app/Models/RecordSummary';
 import { SummaryTotal } from 'src/app/Models/SummaryTotal';
 import { HttpService } from 'src/app/Services/HttpServices';
+import { AddEventComponent } from '../add-event/add-event.component';
 
 @Component({
   selector: 'app-home',

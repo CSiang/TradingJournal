@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.services.calendar.model.Event;
@@ -60,8 +61,13 @@ public class CalendarEventController {
     }
 
     @GetMapping(path="/eventList")
-    // Sample format for startDateTime & endDateTime: "2023-06-24T11:00:00+08:00".
-    public ResponseEntity<List<EventDetail>> getEventsByPeriod(String startDateTime, String endDateTime){
+    // Format of date string to be dd/MM/yyyy. endDate must be later than startDate
+    public ResponseEntity<List<EventDetail>> getEventsByPeriod(
+        @RequestParam(value = "start") String startDateTime,
+        @RequestParam(value = "end") String endDateTime) {
+
+        System.out.println("startDateTime: " + startDateTime);
+        System.out.println("endDateTime: " + endDateTime);
 
         List<EventDetail> eventDetailList = new ArrayList<>();
         String username = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

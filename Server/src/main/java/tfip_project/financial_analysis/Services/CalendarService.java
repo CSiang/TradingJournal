@@ -3,12 +3,10 @@ package tfip_project.financial_analysis.Services;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +30,7 @@ public class CalendarService {
     Calendar gCalSvc;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
+    
 
     public String createNewCalendar(Long AppUserId) throws IOException{
 
@@ -56,10 +54,7 @@ public class CalendarService {
         return newCalId;
     }
 
-    /*
-     * Format of date string to be dd/MM/yyyy.
-     * endDate must be later than startDate
-     */
+    // Format of date string to be dd/MM/yyyy. endDate must be later than startDate
     public Optional<List<Event>> getEvents(String calendarId, String startDate, String endDate) throws ParseException{
 		
 		Date parsedStartDate = dateFormat.parse(startDate);

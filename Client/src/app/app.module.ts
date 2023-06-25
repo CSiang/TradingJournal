@@ -23,6 +23,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { ListEventComponent } from './components/list-event/list-event.component';
 import { EventService } from './Services/EventService';
+import { EventAddTrigger } from './Services/EventAddTrigger';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { EventService } from './Services/EventService';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [HttpService, AuthService, httpInterceptorProviders, LocalStorageService, EventService],
+  providers: [HttpService, AuthService, httpInterceptorProviders, LocalStorageService, EventService, EventAddTrigger],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

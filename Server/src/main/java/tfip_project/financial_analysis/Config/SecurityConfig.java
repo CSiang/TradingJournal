@@ -70,7 +70,7 @@ public class SecurityConfig {
             authorize -> authorize.requestMatchers(HttpMethod.POST, "/auth/register")
                                   .permitAll()
                                   .requestMatchers(HttpMethod.GET, "/auth/forgetPassword", 
-                                                    "/auth/resetPassword")
+                                                    "/auth/resetPassword","api/search","api/search/*")
                                   .permitAll()
                                     );
         http.authorizeHttpRequests(authorize -> authorize

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { nonWhiteSpace } from 'src/app/Constants';
+import { EventAddTrigger } from 'src/app/Services/EventAddTrigger';
 import { EventService } from 'src/app/Services/EventService';
 
 @Component({
@@ -12,7 +13,7 @@ export class AddEventComponent implements OnInit {
 
   form !: FormGroup
 
-  constructor(private fb: FormBuilder, private eventSvc: EventService){}
+  constructor(private fb: FormBuilder, private eventSvc: EventService, private eventTrigger:EventAddTrigger){}
 
   ngOnInit(): void {
     this.form = this.createForm();
@@ -28,21 +29,22 @@ export class AddEventComponent implements OnInit {
   }
 
   submitForm(){
-    console.info("Info of this form: ", this.form.value)
-    console.info("Specifically the start date: ", this.form.value.startDate)
-    console.info("Start date type: ",typeof this.form.value.startDate)
-    console.info("Start date getDate: ",this.form.value.startDate.getDate())
-    console.info("Start date getMonth: ",this.form.value.startDate.getMonth())
-    console.info("Start date getMinutes: ",this.form.value.startDate.getMinutes())
+    this.eventSvc.addEvent(this.form)
+        .then((res:any) => {alert(res['message'])
+                            this.form = this.createForm()
+                            this.hide()
+                          })
+        .catch( (err:any) => alert(err.error['message']))
+        // must add this trigger into finally clause, if not the trigger will be sent before the http call is completed. This is due to the async nature of the HttpClient function. In finally clause, the trigger will only be performed after the then or catch clause are completed.
+        .finally( () => this.eventTrigger.triggerEventRefresh(true) )
+  }
 
-    console.info("Check Start date type: ",typeof this.form.value.startDate ==  typeof Date)
-    console.info("Title type: ",typeof this.form.value.summary)
+  hide(){
+    document.getElementById('popup-Form')!.style.display = 'none';
+  }
 
-    // this.eventSvc.addEvent(this.form)
-    //     .then((res:any) => {alert(res['message'])
-    //                         this.form = this.createForm()
-    //                       })
-    //     .catch( (err:any) => alert(err.error['message']))
+  unhide(){
+    document.getElementById('popup-Form')!.style.display = 'block';
   }
 
 

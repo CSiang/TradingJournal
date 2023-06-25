@@ -74,7 +74,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     Algorithm algorithm = Algorithm.HMAC256(secretKey.getBytes());
 
     // Create token
-    Date expiryDate = new Date(System.currentTimeMillis() + 30 * 60 * 1000);
+    // 24*60*60*1000 is for 1 day.
+    Date expiryDate = new Date(System.currentTimeMillis() + 24*60*60*1000);
 
     String accessToken = JWT.create().withSubject(user.getUsername())
                             .withExpiresAt(expiryDate)
@@ -84,7 +85,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     // This is for refresh token
     String refreshToken = JWT.create().withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 24*60*60*1000))
                         .withIssuer(request.getRequestURI().toString())
                         .sign(algorithm);
 
