@@ -63,8 +63,8 @@ export class ListEventComponent implements OnInit, OnDestroy{
     const toSplit = to.split("/")
     this.startDateStr = fromSplit[1] +'/' + fromSplit[0] +'/' + fromSplit[2]
     this.endDateStr = toSplit[1] +'/' + toSplit[0] +'/' + toSplit[2]
-    const startDate = fromSplit[1] +'/' + fromSplit[0] +'/' + fromSplit[2]
-    const endDate = toSplit[1] +'/' + toSplit[0] +'/' + toSplit[2]
+    // const startDate = fromSplit[1] +'/' + fromSplit[0] +'/' + fromSplit[2]
+    // const endDate = toSplit[1] +'/' + toSplit[0] +'/' + toSplit[2]
 
     this.loadEvents()
   }
@@ -81,6 +81,7 @@ export class ListEventComponent implements OnInit, OnDestroy{
   selectedRow(row:any){
     // from the check, this row object is actually EventDetail object.
     this.rowContent = row;
+    console.info("rowContent is: ", this.rowContent)
     // Need to have this setTimeout to read the style property properly..if not it will null....
     setTimeout(() => {
       document.getElementById("popup-1")!.style.display = "block";
@@ -89,6 +90,21 @@ export class ListEventComponent implements OnInit, OnDestroy{
 
   hideEventDetail(){
     document.getElementById("popup-1")!.style.display = "none";
+  }
+
+  deleteEvent(){
+    console.info("The eventId of the row: ",this.rowContent.eventId)
+    this.eventSvc.deleteEvent(this.rowContent.eventId)
+        .then((res:any) => {
+            alert(res['message'])
+        })
+        .catch((err:any) => {
+            alert(err.error['message'])
+        })
+        .finally(() => {
+            this.loadEvents()
+            this.hideEventDetail()
+          })
   }
 
 

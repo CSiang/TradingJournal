@@ -32,6 +32,11 @@ export class EventService{
         return lastValueFrom(this.http.get<EventDetail>(url, {params: param}))
     }
 
+    deleteEvent(eventId: string){
+        const url = BASE_URL + `/calendar/delete/${eventId}`;
+        return lastValueFrom(this.http.delete(url));
+    }
+
   
 
 }

@@ -59,17 +59,20 @@ public class CalendarService {
 		
 		Date parsedStartDate = dateFormat.parse(startDate);
         Date parsedEndDate = dateFormat.parse(endDate);
+        // Use the newEndDate so the search result will include the date of endDate. Per the API, the resulted events are endDate exclusive.
+        Date newEndDate = new Date(parsedEndDate.getTime() + 24*60*60*1000); 
         
-        System.out.println("parsedStartDate: "+ parsedStartDate);
-        System.out.println("parsedEndDate: "+ parsedEndDate);
-        System.out.println("DateTime of parsedStartDate: "+ new DateTime(parsedStartDate));
-        System.out.println("DateTime of parsedEndDate: "+ new DateTime(parsedEndDate));
+        // System.out.println("parsedStartDate: "+ parsedStartDate);
+        // System.out.println("parsedEndDate: "+ parsedEndDate);
+        // System.out.println("newEndDate: "+ newEndDate);
+        // System.out.println("DateTime of parsedStartDate: "+ new DateTime(parsedStartDate));
+        // System.out.println("DateTime of parsedEndDate: "+ new DateTime(parsedEndDate));
 
         try{
             // timeMax must be later than timeMin.
             Events events = gCalSvc.events().list(calendarId)
                                 .setTimeMin(new DateTime(parsedStartDate))
-                                .setTimeMax(new DateTime(parsedEndDate))
+                                .setTimeMax(new DateTime(newEndDate))
                                 // setTimeZone is to set the timezone of the event you get from this API. if not it will be per calendar default, for this service account, it is UTC.
                                 .setTimeZone("Asia/Singapore")
                                 .execute();
@@ -77,9 +80,9 @@ public class CalendarService {
     
             List<Event> eventList = events.getItems();
     
-            for(Event event: eventList){
-                System.out.println("Event: " + event);
-            }
+            // for(Event event: eventList){
+            //     System.out.println("Event: " + event);
+            // }
             return Optional.of(eventList);
 
         } catch (Exception ex){
@@ -95,11 +98,11 @@ public class CalendarService {
             CalendarList calendarList =  gCalSvc.calendarList().list().execute();
             List<CalendarListEntry> items = calendarList.getItems();
     
-            System.out.println("Below is the list of calendars from gCalSvc:");
-            for (CalendarListEntry calendarListEntry : items) {
-                System.out.printf("\nCalendar ID: %s, Calendar Summary: %s\n",
-                            calendarListEntry.getId(),calendarListEntry.getSummary());
-            }
+            // System.out.println("Below is the list of calendars from gCalSvc:");
+            // for (CalendarListEntry calendarListEntry : items) {
+            //     System.out.printf("\nCalendar ID: %s, Calendar Summary: %s\n",
+            //                 calendarListEntry.getId(),calendarListEntry.getSummary());
+            // }
             return Optional.of(items);
 
         } catch (Exception ex){
@@ -191,7 +194,7 @@ public class CalendarService {
 
         event.setDescription(body);
 
-        // Reminder is not used.
+        // Reminder is not used. Not able to set reminder for attendee or other person than this service email, hence it is pointless to set.
         // EventReminder[] reminderOverrides = new EventReminder[] {
         //     new EventReminder().setMethod("email").setMinutes(24 * 60),
         //     new EventReminder().setMethod("popup").setMinutes(5),

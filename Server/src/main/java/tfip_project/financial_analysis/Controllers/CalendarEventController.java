@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,9 +47,9 @@ public class CalendarEventController {
         String body = eventData.get("body");
         String startDateTime = eventData.get("startDateTime");
         String endDateTime = eventData.get("endDateTime");
-        System.out.printf("\nThe form received is:\n%s\n", eventData);
-        System.out.printf("\nTitle: %s, body: %s, startDateTime: %s, endDateTime: %s\n",
-                title, body, startDateTime, endDateTime);
+        // System.out.printf("\nThe form received is:\n%s\n", eventData);
+        // System.out.printf("\nTitle: %s, body: %s, startDateTime: %s, endDateTime: %s\n",
+        //         title, body, startDateTime, endDateTime);
 
         Event newEvent = calSvc.newEvent(title, body, startDateTime, endDateTime);
         Boolean outcome = calSvc.insertEvent(user.getCalendarId(), newEvent);
@@ -66,13 +68,13 @@ public class CalendarEventController {
         @RequestParam(value = "start") String startDateTime,
         @RequestParam(value = "end") String endDateTime) {
 
-        System.out.println("startDateTime: " + startDateTime);
-        System.out.println("endDateTime: " + endDateTime);
+        // System.out.println("startDateTime: " + startDateTime);
+        // System.out.println("endDateTime: " + endDateTime);
 
         List<EventDetail> eventDetailList = new ArrayList<>();
         String username = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser user = userSvc.getUser(username);
-        System.out.println("User: " + user);
+        // System.out.println("User: " + user);
 
         try{
             Optional<List<Event>> optEventList = calSvc.getEvents(user.getCalendarId(), startDateTime, endDateTime);
@@ -88,5 +90,25 @@ public class CalendarEventController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(eventDetailList);
         }
     }
+
+    @DeleteMapping(path ="delete/{eventId}")
+    public ResponseEntity<MsgResponse> deleteEvent(@PathVariable String eventId){
+
+        // System.out.println("eventId received: "+ eventId);
+        String username = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AppUser user = userSvc.getUser(username);
+
+        if(calSvc.deleteEvent(user.getCalendarId(), eventId)){
+            return ResponseEntity.ok(new MsgResponse("Calendar event is removed."));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                    new MsgResponse("Calendar event removal unsuccessful, please contact administrator.")
+                    );
+        }
+
+    }
+
+    
 
 }

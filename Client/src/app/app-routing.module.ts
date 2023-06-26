@@ -9,7 +9,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { AddEventComponent } from './components/add-event/add-event.component';
 
 const routes: Routes = [
   {path:"", component: HomeComponent},
@@ -21,7 +20,6 @@ const routes: Routes = [
   {path:"profile", component: ProfileComponent},
   {path:"forgetPassword", component: ForgetPasswordComponent},
   {path:"resetPassword/:resetCode", component: ResetPasswordComponent},
-  {path:"addEvent", component: AddEventComponent},
   {path: "**", redirectTo:"/",pathMatch:"full" }
 ];
 
