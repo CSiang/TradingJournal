@@ -1,13 +1,12 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, lastValueFrom, merge, tap } from 'rxjs';
+import { Observable, Subscription, lastValueFrom, merge, tap } from 'rxjs';
 import { nonWhiteSpace, orderDate } from 'src/app/Constants';
 import { TradingRecord } from 'src/app/Models/TradingRecord';
 import { HttpService } from 'src/app/Services/HttpServices';
 import { recordDataSource } from './records.datasource';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-records',
@@ -18,7 +17,6 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator !: MatPaginator
 
-  // holdingStatus: boolean|null = true
   holdingStatus: boolean|null = null
   recordLimit:number = 5
   recordOffset: number = 0
@@ -30,13 +28,14 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   form !: FormGroup
   sellForm !: FormGroup
   array !: FormArray
-  // displayedColumns: string[] = ['stockTicker', 'stockName', 'currency', 'buyPrice', 'buyAmount','buyDate', 'actions'];
+
   displayedColumns: string[] = ['stockTicker', 'stockName', 'currency', 'buyPrice','sellPrice', 'buyAmount','buyDate', 'sellDate','actions'];
   dataSource !: recordDataSource
   sellRecord !: TradingRecord
+  page$ !: Subscription
+  closeTrade$ !: Subscription
 
-  constructor(private fb: FormBuilder, private httpSvc: HttpService, 
-              private router: Router, private actRoute: ActivatedRoute){}
+  constructor(private fb: FormBuilder, private httpSvc: HttpService, private actRoute: ActivatedRoute){}
   
   ngOnInit(): void {
     const stockTicker = this.actRoute.snapshot.params["ticker"]
@@ -53,18 +52,22 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   ngAfterViewInit(): void {
-    this.paginator.page.subscribe(
-      () => {
-        this.recordLimit = this.paginator.pageSize;
-        this.recordOffset = this.paginator.pageIndex * this.recordLimit;
-        this.loadPage();
-      }
-      )
-
+    this.page$ = this.paginator.page.subscribe(
+                      () => {
+                        this.recordLimit = this.paginator.pageSize;
+                        this.recordOffset = this.paginator.pageIndex * this.recordLimit;
+                        this.loadPage();
+                      }
+            )
     }
 
   ngOnDestroy(): void {
-      
+    if(this.page$){
+      this.page$.unsubscribe()
+    }
+    if(this.closeTrade$){
+      this.closeTrade$.unsubscribe()
+    }
   }
     
   createForm(){
@@ -103,8 +106,6 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveRecords(){
-    console.info("Form value: ", this.form.value)
-    console.info("Array: ", this.array)
     const savedUsername = localStorage.getItem("username")
     
     // both testRecords and records works, Server able to receive the data.
@@ -128,14 +129,12 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
                   } as unknown as TradingRecord
                 } )
   
-    console.info("Record: ",records)
-
     this.httpSvc.saveRecord(records)
       .then((data:any) => {
-        alert(data['message'])
-        this.loadPage()
-      })
-      .catch(err => {console.info("error: ", err)})
+            alert(data['message'])
+            this.loadPage()
+          })
+      .catch(err => {console.error("error: ", err)})
   }
 
   formValid(){
@@ -178,7 +177,6 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   deletePrompt(record: any){
         this.delRecord = record;
-        console.info("record: ", this.delRecord)
         setTimeout(() => {
           document.getElementById("delConfirm")!.style.borderColor = "red"
           document.getElementById("delConfirm")!.style.display = "block";
@@ -188,12 +186,12 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   deleteRecord(){
     const id: number = +this.delRecord.id
     lastValueFrom(this.httpSvc.deleteRecord(id))
-                  .then((data:any) => {console.info("Response from server: ", data)
+                  .then((data:any) => {
                                       alert(data['message'])
                                       document.getElementById("delConfirm")!.style.display = "none";
                                 }
                         )
-                  .catch(err => console.info("Error: ", err))
+                  .catch(err => console.error("Error: ", err))
                   .finally(() => this.loadPage())
   }
 
@@ -209,7 +207,6 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   updateRecord(record:TradingRecord){
     this.createSellForm()
     this.sellRecord = record;
-    console.info("sellRecord: ", this.sellRecord)
     // Need to use this setTimeout to ensure that the sellRecord is assigned before accessing to DOM element, if not will have error and popup form won't display correctly at the 1st time.
     setTimeout(() => {
       document.getElementById("myForm")!.style.display = 'block'
@@ -229,19 +226,16 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   closeTrade(){
-    console.info("Value of the record to be updated: ", this.sellRecord)
-    console.info("Value of sell form: ",this.sellForm.value)
+
     this.sellRecord['sellDate'] = this.sellForm.value['sellDate']
     this.sellRecord['sellPrice'] = this.sellForm.value['sellPrice']
     this.sellRecord['sellTransactionCost'] = this.sellForm.value['sellTransactionCost']
-    console.info("Value of the record after updating with form: ", this.sellRecord)
 
-    this.httpSvc.closeTrade(this.sellRecord).subscribe({
-      next: (data:any) => alert(data['message']),
-      error: (err:any) => alert(err['message']),
-      complete: () => document.getElementById("myForm")!.style.display = 'none'
-    })
-
+    this.closeTrade$ =  this.httpSvc.closeTrade(this.sellRecord).subscribe({
+              next: (data:any) => alert(data['message']),
+              error: (err:any) => alert(err['message']),
+              complete: () => document.getElementById("myForm")!.style.display = 'none'
+            })
   }
 }
 

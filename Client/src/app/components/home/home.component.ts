@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { RecordSummary } from 'src/app/Models/RecordSummary';
 import { SummaryTotal } from 'src/app/Models/SummaryTotal';
 import { HttpService } from 'src/app/Services/HttpServices';
-import { AddEventComponent } from '../add-event/add-event.component';
 
 @Component({
   selector: 'app-home',
@@ -18,21 +17,15 @@ export class HomeComponent implements OnInit{
   displayList : SummaryTotal[][] = [this.holdTotal, this.soldTotal]
   summaryList : RecordSummary[][] = [this.holdSummary, this.soldSummary]
   toggleButton = "Expand"
-  // tickerList : string[] = ["AAPL", "META", "AMZN"]
 
   constructor(private httpSvc:HttpService){}
 
   // Need to take note of the currency difference of the ticker (some usd some sgd, can't just add them up together.)
   ngOnInit(): void {
-    // this.httpSvc.getStockPrice()
-    //             .then(data => console.info("Data from getStockPrice: ", data))
-
     this.httpSvc.getPortfolio()
         .then((data:any) => {
                             this.holdSummary = data['hold']
-                            console.info("holdSummary: ", this.holdSummary)
                             this.soldSummary = data['sold']
-                            console.info("soldSummary: ", this.soldSummary)
                       })
         .finally(() => {
               // to find the total of hold
@@ -66,23 +59,11 @@ export class HomeComponent implements OnInit{
             })
   }
 
-
-  // h2MoustOver(){
-  //   document.getElementById("title")!.style.color = "violet"
-  //   document.getElementById("title")!.style.fontWeight = "bold"
-  // }
-
-  // h2MoustLeave(){
-  //   document.getElementById("title")!.style.color = "black"
-  //   document.getElementById("title")!.style.fontWeight = "normal"
-  // }
-
   tableDisplay(idx: number){
     let tableNum = `table-${idx}`
     let buttonLess =  `button-less-${idx}`
     let buttonMore =  `button-more-${idx}`
     let displayStyle = document.getElementById(tableNum)?.style.display
-    console.info("tableNum, buttonLess, buttonMore: ", tableNum,buttonLess, buttonMore)
 
     if(displayStyle === "none"){
       document.getElementById(tableNum)!.style.display = "contents"

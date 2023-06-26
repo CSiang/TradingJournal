@@ -29,8 +29,6 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(){
-    console.info(this.form.value)
-
     const appUser = {
       name: this.form.value["name"],
       username: this.form.value["username"],
@@ -43,9 +41,7 @@ export class RegisterComponent implements OnInit {
                               alert("Please login.")
                               this.router.navigate(['/login'])
           })
-        .catch( err => {console.info("Registration error: ", err)
-                        alert(err['message'])
-                        })
+        .catch( err => alert(err['message']) )
   }
 
 

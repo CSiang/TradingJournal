@@ -36,7 +36,7 @@ export class AddEventComponent implements OnInit {
                           })
         .catch( (err:any) => alert(err.error['message']))
         // must add this trigger into finally clause, if not the trigger will be sent before the http call is completed. This is due to the async nature of the HttpClient function. In finally clause, the trigger will only be performed after the then or catch clause are completed.
-        .finally( () => this.eventTrigger.triggerEventRefresh(true) )
+        .finally( () => this.eventTrigger.triggerEventRefresh() )
   }
 
   hide(){

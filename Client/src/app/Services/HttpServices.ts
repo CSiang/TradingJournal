@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { SearchResult } from "../Models/SearchResut";
+import { SearchResult } from "../Models/SearchResult";
 import { lastValueFrom } from "rxjs";
 import { StockGenInfo } from "../Models/StockGenInfo";
 import { TradingRecord } from "../Models/TradingRecord";
@@ -13,7 +13,6 @@ export class HttpService{
     constructor(private http: HttpClient){};
 
     searchStocks(query: string): Promise<SearchResult[]> {
-        // let url = BASE_URL + "/search/" +  query;
         let url = BASE_URL + "/api/search";
         const param = new HttpParams().set("query",query )
         return lastValueFrom(this.http.get<SearchResult[]>(url, {params: param}))
@@ -26,8 +25,7 @@ export class HttpService{
 
     saveRecord(tradingRecord: TradingRecord[]){
         const url =  BASE_URL + "/api/saveRecord"
-        // JSON.stringify(tradingRecord)
-        // return lastValueFrom(this.http.post(url, JSON.stringify(tradingRecord)))
+
         return lastValueFrom(this.http.post(url, tradingRecord))
     }
 
@@ -70,22 +68,5 @@ export class HttpService{
         const url = BASE_URL + `/api/tradeSummary`
         return lastValueFrom(this.http.get(url))
     }
-
-    // getStockPrice(tickerList: string[]){
-    //     const firstTicker = tickerList.shift()
-    //     const url = `https://query2.finance.yahoo.com/v8/finance/chart/${firstTicker}`
-    //     const param = new HttpParams().set("range", "1d").set("interval", "1d")
-    //                                   .set("comparisons", tickerList.toString())
-    //     console.info("firstTicker: ", firstTicker)
-    //     console.info("tickerList to string: ", tickerList.toString())
-
-    //     return lastValueFrom(this.http.get(url, {params: param}))
-    // }
-
-    // getStockPrice(){
-    //     const url = "https://query2.finance.yahoo.com/v8/finance/chart/AAPL?range=1d&interval=1d&comparisons=META,TSLA,BABA,AMZN,BS6.SI"
-
-    //     return lastValueFrom(this.http.get(url))
-    // }
 
 }

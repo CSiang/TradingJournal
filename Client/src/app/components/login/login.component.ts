@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/AuthService';
 import { HttpService } from 'src/app/Services/HttpServices';
@@ -54,8 +54,8 @@ export class LoginComponent implements OnInit {
             }
           })
             .catch(err => {
-              console.info("Error: ",err)
-              console.info("Http code:", err.status)
+              console.error("Error: ",err)
+              console.error("Http code:", err.status)
               if(err.status == 0){
                 alert("Server down...please contacts administrator.")
               } else {

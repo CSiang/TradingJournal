@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SearchResult } from 'src/app/Models/SearchResut';
+import { SearchResult } from 'src/app/Models/SearchResult';
 import { HttpService } from 'src/app/Services/HttpServices';
 
 @Component({
@@ -20,8 +20,8 @@ export class SearchStockComponent {
         .then(data => {this.stockList = data
                        this.message = ""} )
         .catch(error => {
-              console.info("error: ", error)
-              console.info("Status: ", error.status)
+                console.error("error: ", error)
+                console.error("Status: ", error.status)
               if(error.status == 0){
                 this.message = "No response from server."
               } else {

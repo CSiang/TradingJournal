@@ -36,38 +36,4 @@
     <div *ngIf="message.length>0">
         <h1 style="text-align: center; padding: 50px">{{message}}</h1>
     </div>
-
-    <!-- <div class="row" th:unless="${#lists.isEmpty(messages)}">
-        <div class="col-2"></div>
-        <div class="col-8">            
-            <ol >
-                <li style="font-size:18px; color:red" th:each="msg : ${messages}" th:text="${msg}"></li>
-            </ol>
-        </div>
-        <div class="col-2"></div>
-    </div>
-
-    <div th:unless="${results == null}">
-        <h2 style="text-align:center">Search Result:</h2>
-        <br>
-        <table class="table">
-            <tr>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Stock Exchange</th>
-            </tr>
-            <tr th:each="result : ${results}" >
-                <td th:text="${result.symbol}"></td>
-                <td>
-                    <a th:href="@{/search/{symbol}(symbol = ${result.symbol})}" >
-                        <span th:text="${result.name}"></span>
-                    </a>
-                </td>
-                <td th:text="${result.type}"></td>
-                <td th:text="${result.stockExchange}"></td>
-            </tr>
-        </table>
-    </div> -->
-
 </div>

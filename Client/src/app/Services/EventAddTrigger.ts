@@ -7,7 +7,7 @@ export class EventAddTrigger{
     private trigger = new BehaviorSubject<boolean>(false)
     trigger$ = this.trigger.asObservable();
 
-    triggerEventRefresh(trigger: boolean){
+    triggerEventRefresh(){
         this.trigger.next(true)
     }
 

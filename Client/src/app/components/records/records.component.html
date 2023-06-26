@@ -16,7 +16,6 @@
                         <mat-form-field style="width:130px; height: 70px;">
                             <mat-label style="font-size:small;">Trading Account</mat-label>
                             <input style="font-size: small;color: blue;" matInput type="text" formControlName="tradingAccount">
-                            <!-- record has error: {{record.get('tradingAccount')?.hasError('required')}} -->
                             <mat-error *ngIf="record.get('tradingAccount')?.invalid && record.get('tradingAccount')?.dirty">
                                 Required.</mat-error>
                         </mat-form-field>
@@ -50,7 +49,6 @@
                             <mat-error *ngIf="record.get('buyAmount')?.invalid && record.get('buyAmount')?.dirty">
                                 Minimum 1 unit</mat-error>
                         </mat-form-field>
-        
                         <mat-form-field style="width:150px; height: 70px;">
                             <mat-label>Buy Date</mat-label>
                             <input style="font-size: small;color:blue" matInput [matDatepicker]="picker" formControlName="buyDate">
@@ -74,11 +72,14 @@
                     </tr>
                 </table>
                 <button mat-raised-button color="primary" type="submit"
-                [disabled]="formValid()">Save Record</button>
+                    [disabled]="formValid()">Save Record
+                </button>
                 <a mat-raised-button style="margin: 10px 0px 10px 10px" color="primary" 
-                 (click)="addRecord()"> <mat-icon>add</mat-icon>Record </a>
-                 <a mat-raised-button style="margin: 10px 0px 10px 10px" color="warn" 
-                 (click)="closeAddForm()"> Close </a>
+                    (click)="addRecord()"> <mat-icon>add</mat-icon>Record 
+                </a>
+                <a mat-raised-button style="margin: 10px 0px 10px 10px" color="warn" 
+                    (click)="closeAddForm()"> Close 
+                </a>
             </form>
         </ng-template>
 

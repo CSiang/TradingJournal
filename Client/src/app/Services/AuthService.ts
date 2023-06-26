@@ -12,8 +12,8 @@ export class AuthService{
     login(username:string, password: string) {
         const url = baseUrl + "/login";
         const body = new HttpParams()
-          .set('username', username)
-          .set('password', password);
+            .set('username', username)
+            .set('password', password);
       
         return lastValueFrom(this.http.post(url,
           body.toString(),
@@ -39,7 +39,6 @@ export class AuthService{
       const url =  baseUrl + "/auth/verify"
       const data = {username: username, password: password}
       
-      // return lastValueFrom(this.http.post(url, JSON.stringify(data)))
       return lastValueFrom(this.http.post(url, data))
     }
 

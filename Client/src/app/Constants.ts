@@ -1,7 +1,7 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms"
 
  export const orderDate= (control: AbstractControl) => {
-    // Need to convert the data string to date data type, if not the validators can't validate it.
+    // Need to convert the data string to Date data type, if not the validators can't validate it.
     if(new Date(control.value) > new Date()){
         return {orderDate: true} as ValidationErrors
     } else {

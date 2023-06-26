@@ -8,16 +8,12 @@
                 <input matInput [matDatepicker]="picker" #from>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <!-- <mat-error *ngIf="sellForm.controls['sellDate'].invalid && sellForm.controls['sellDate'].dirty ">
-                    Must NOT be later than today.</mat-error> -->
             </mat-form-field>
             <mat-form-field style="width: 175px;">
                 <mat-label>To:</mat-label>
                 <input matInput [matDatepicker]="picker1" #to>
                 <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
-                <!-- <mat-error *ngIf="sellForm.controls['sellDate'].invalid && sellForm.controls['sellDate'].dirty ">
-                    Must NOT be later than today.</mat-error> -->
             </mat-form-field>
         </div>
         <div class="error">
@@ -68,6 +64,8 @@
         <ng-content *ngTemplateOutlet="popup1"></ng-content>
     </div>
 </div>
+
+<!-- Below are the templates -->
 
 <app-add-event></app-add-event>
 

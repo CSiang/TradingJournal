@@ -18,14 +18,10 @@ export class StockDetailsComponent implements OnInit {
               private router: Router){}
 
   ngOnInit(): void {
-
     this.stockSymbol = this.actRoute.snapshot.params['symbol'];
-    console.info('Stock symbol: ', this.stockSymbol)
 
     this.httpSvc.getStockDetails(this.stockSymbol)
-        .then(data => {this.GenInfo = data
-                        console.info("Stock Gen Info: ", this.GenInfo)
-                      })
+        .then(data => this.GenInfo = data)
         .catch(err => {
           if(err.status == 500){
             this.message = "Internal server error...please contact administrator."

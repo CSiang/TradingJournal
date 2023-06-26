@@ -16,19 +16,17 @@ export class ResetPasswordComponent implements OnInit {
   
   ngOnInit(): void {
     this.resetCode = this.actRoute.snapshot.params['resetCode']
-    console.info("resetCode: ", this.resetCode)
   }
 
   validEmail(pattern: string){
-    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    if(pattern.match(mailformat)){
+    let mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    if(pattern.match(mailFormat)){
       return true
     } 
     return false
   }
 
   resetPassword(email: string, password: string){
-    console.info(`Email is ${email}, password is ${password}`)
     this.authSvc.resetPassword(email, password, this.resetCode)
                 .then((res:any) => { alert("Password has been successfully reset!!!") 
                                      alert(res['message'])

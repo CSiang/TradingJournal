@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { AddEventComponent } from '../add-event/add-event.component';
 import { EventService } from 'src/app/Services/EventService';
 import { EventDetail } from 'src/app/Models/EventDetail';
-import { Observable, Subscription, timeout } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { EventAddTrigger } from 'src/app/Services/EventAddTrigger';
 
 @Component({
@@ -27,7 +27,6 @@ export class ListEventComponent implements OnInit, OnDestroy{
     this.refresh$ = this.eventTrigger.trigger$.subscribe(
                             status => {
                               if(status == true){
-                                console.info("event trigger is triggered!!!!")
                                 this.loadEvents()
                               }
                             } 
@@ -63,8 +62,6 @@ export class ListEventComponent implements OnInit, OnDestroy{
     const toSplit = to.split("/")
     this.startDateStr = fromSplit[1] +'/' + fromSplit[0] +'/' + fromSplit[2]
     this.endDateStr = toSplit[1] +'/' + toSplit[0] +'/' + toSplit[2]
-    // const startDate = fromSplit[1] +'/' + fromSplit[0] +'/' + fromSplit[2]
-    // const endDate = toSplit[1] +'/' + toSplit[0] +'/' + toSplit[2]
 
     this.loadEvents()
   }
@@ -72,16 +69,14 @@ export class ListEventComponent implements OnInit, OnDestroy{
   loadEvents(){
     this.eventSvc.getEvent(this.startDateStr, this.endDateStr)
     .then((data:any) => {
-                          console.info("data is: ",data)
                           this.data = data
                         })
-    .catch((err:any) => console.info("Error is: ", err))
+    .catch((err:any) => console.error("Error is: ", err))
   }
 
   selectedRow(row:any){
     // from the check, this row object is actually EventDetail object.
     this.rowContent = row;
-    console.info("rowContent is: ", this.rowContent)
     // Need to have this setTimeout to read the style property properly..if not it will null....
     setTimeout(() => {
       document.getElementById("popup-1")!.style.display = "block";
@@ -93,7 +88,6 @@ export class ListEventComponent implements OnInit, OnDestroy{
   }
 
   deleteEvent(){
-    console.info("The eventId of the row: ",this.rowContent.eventId)
     this.eventSvc.deleteEvent(this.rowContent.eventId)
         .then((res:any) => {
             alert(res['message'])

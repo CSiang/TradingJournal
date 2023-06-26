@@ -32,10 +32,6 @@
                         <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
                         <ngx-mat-datetime-picker #picker>
                         </ngx-mat-datetime-picker>
-                        <!-- <mat-error *ngIf="form.controls['endDate'].invalid && form.controls['endDate'].dirty ">
-                            Start date is required with valid date format.</mat-error>
-                        <span class="error" *ngIf="form.controls['endDate'].invalid && form.controls['endDate'].dirty ">
-                            End date is required.</span> -->
                         <span class="error" *ngIf="form.controls['endDate'].value < form.controls['startDate'].value  && form.controls['startDate'].dirty ">
                             End date is required & must be later than start date</span>
                     </mat-form-field>

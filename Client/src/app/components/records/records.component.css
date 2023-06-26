@@ -50,17 +50,13 @@ th, td{
     position:fixed;
     top: 50%;
     left: 50%;
-    /* transform: translate(30%,40%); */
     transform: translate(-50%,-50%);
     border-color: black;
     border-width:medium;
     border-radius: 5px;
     border-style:ridge;
-    /* box-shadow: 5px 10px; */
     width:fit-content;
     height:fit-content;
-    /* width: 60%;
-    height: 50%; */
     color:black;
     background-color: white;
     padding: 20px;

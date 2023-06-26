@@ -19,12 +19,7 @@ export class ForgetPasswordComponent {
     return false
   }
 
-  submitEmail(email: string){
-    console.info("Current url: ", window.location.href)
-    console.info("Current domain: ", window.location.origin)
-    
-    console.info("Email: ", email)
-    
+  submitEmail(email: string){    
     this.authSvc.forgetPassword(email,window.location.origin)
         .then( (res:any) => {alert(res['message'])
                         alert("Please check your mailbox for password reset email!!!")

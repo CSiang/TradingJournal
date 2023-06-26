@@ -20,15 +20,13 @@ export class ProfileComponent {
               private lsSvc: LocalStorageService){}
 
   ngOnInit(): void {
-
     // @ts-ignore
     this.username = localStorage.getItem("username")
     if(this.username != null){
       this.authSvc.getUser(this.username)
-      .then((data:any) => {console.info("User information: ",data )
-                          console.info("Name: ",data['name'] )
-                    this.form = this.createForm(data['name'], data['email'],data['username'], data['id'])
-    })
+      .then((data:any) => 
+              this.form = this.createForm(data['name'], data['email'],data['username'], data['id'])
+      )
     }
   }
 
@@ -50,7 +48,6 @@ export class ProfileComponent {
   }
 
   submit(){
-    console.info("The form value: ",this.form.value)
     document.getElementById("popup")!.style.display = "block"
   }
 
@@ -59,10 +56,6 @@ export class ProfileComponent {
   }
 
   updateUser(password: string){
-    console.info("Password: ", password)
-    console.info("updateUser is activated!!")
-    console.info("The form value of updateUser: ",this.form.value)
-
     const appUser = {
       id: this.form.value["id"],
       name: this.form.value["name"],

@@ -29,24 +29,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jdbc</artifactId>
-		</dependency> -->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -58,7 +51,6 @@
 			<artifactId>YahooFinanceAPI</artifactId>
 			<version>3.17.0</version>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
         <dependency>
             <groupId>org.glassfish</groupId>
@@ -80,7 +72,6 @@
 			<artifactId>java-jwt</artifactId>
 			<version>4.4.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
@@ -109,7 +100,6 @@
 			<artifactId>google-auth-library-oauth2-http</artifactId>
 			<version>1.3.0</version>
 		</dependency>
-
 	<dependency>
 		<groupId>com.google.api-client</groupId>
 		<artifactId>google-api-client</artifactId>

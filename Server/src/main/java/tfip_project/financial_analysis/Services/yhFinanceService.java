@@ -1,6 +1,5 @@
 package tfip_project.financial_analysis.Services;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,8 +29,8 @@ public class yhFinanceService {
     Util util;
 
     // To find stock recommendation based on the selected stock. This is for future development use.
-    private final String urlRecommendedSymbols = """
-        https://query1.finance.yahoo.com/v6/finance/recommendationsbysymbol/aapl """; 
+    // private final String urlRecommendedSymbols = """
+    //     https://query1.finance.yahoo.com/v6/finance/recommendationsbysymbol/aapl """; 
 
     private final String urlSearchName = """
         https://query1.finance.yahoo.com/v7/finance/autocomplete""";

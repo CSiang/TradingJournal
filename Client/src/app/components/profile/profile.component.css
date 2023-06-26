@@ -21,7 +21,6 @@
 }
 
 .popup{
-    /* display: block; */
     display: none;
     background-color: antiquewhite;
     position: absolute;
