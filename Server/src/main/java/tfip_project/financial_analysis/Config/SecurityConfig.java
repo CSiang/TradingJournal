@@ -72,6 +72,8 @@ public class SecurityConfig {
                                   .requestMatchers(HttpMethod.GET, "/auth/forgetPassword", 
                                                     "/auth/resetPassword","api/search","api/search/*")
                                   .permitAll()
+                                  .requestMatchers("/login","/login/**", "/*", "/record")
+                                  .permitAll()
                                     );
         http.authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers(HttpMethod.GET, "/auth/users")

@@ -5,7 +5,8 @@ import { lastValueFrom } from "rxjs";
 import { StockGenInfo } from "../Models/StockGenInfo";
 import { TradingRecord } from "../Models/TradingRecord";
 
-const BASE_URL = "http://localhost:8080"
+// const BASE_URL = "http://localhost:8080"
+const BASE_URL = "https://trading-journal-production.up.railway.app";
 
 @Injectable()
 export class HttpService{

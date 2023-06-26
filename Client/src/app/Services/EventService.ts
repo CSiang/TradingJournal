@@ -3,7 +3,8 @@ import { Injectable } from "@angular/core";
 import { lastValueFrom } from "rxjs";
 import { EventDetail } from "../Models/EventDetail";
 
-const BASE_URL = "http://localhost:8080"
+// const BASE_URL = "http://localhost:8080"
+const BASE_URL = "https://trading-journal-production.up.railway.app";
 
 @Injectable()
 export class EventService{

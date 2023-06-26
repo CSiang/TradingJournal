@@ -79,6 +79,7 @@ public class TradeRestController {
                 System.out.printf("Json data for symbol %s has been obtained from Yahoo and extracted from Redis\n", symbol);
             }
         } catch(Exception ex){
+            ex.printStackTrace();
             System.out.println("Redis Template exception...");
             System.out.printf("Error: %s",ex.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(genInfo);

@@ -76,12 +76,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->	
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>4.4.3</version>
 		</dependency>
+
 		<!-- Below is dependency to send email. -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
 		<dependency>

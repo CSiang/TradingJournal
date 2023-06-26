@@ -21,7 +21,7 @@ public class redisConfig {
     @Value("${spring.redis.port}")
     private Optional<Integer> redisPort;
 
-    @Value("$spring.redis.username}")
+    @Value("${spring.redis.username}")
     private String redisUsername;
 
     @Value("${spring.redis.password}")
@@ -36,12 +36,16 @@ public class redisConfig {
     public RedisTemplate<String, String> redisTemplate(){
 
         final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName(redisHost);
+        config.setHostName(redisHost.trim());
+        // config.setHostName(redisHost);
+
         config.setPort(redisPort.get()); // Remember to use .get() because this is Optional class.
 
         if( !redisUsername.isEmpty() && !redisPassword.isEmpty()){
-            config.setUsername(redisUsername);
-            config.setPassword(redisPassword);
+            // config.setUsername(redisUsername);
+            // config.setPassword(redisPassword);
+            config.setUsername(redisUsername.trim());
+            config.setPassword(redisPassword.trim());
         }
 
         config.setDatabase(redisDatabase.get());
