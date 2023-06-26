@@ -20,9 +20,6 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import tfip_project.financial_analysis.Util;
 import tfip_project.financial_analysis.Models.SearchResult;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
-
 
 @Service
 public class yhFinanceService {
@@ -32,10 +29,7 @@ public class yhFinanceService {
     @Autowired
     Util util;
 
-
-    private final String url = """
-        https://query1.finance.yahoo.com/v10/finance/quoteSummary/aapl?modules=financialData """;
-
+    // To find stock recommendation based on the selected stock. This is for future development use.
     private final String urlRecommendedSymbols = """
         https://query1.finance.yahoo.com/v6/finance/recommendationsbysymbol/aapl """; 
 
@@ -104,8 +98,6 @@ public class yhFinanceService {
 
     public  Map<String, String> getStockPrice(List<String> tickerList){
 
-    // https://query2.finance.yahoo.com/v8/finance/chart/AAPL?range=1d&interval=1d&comparisons=META,TSLA,BABA,AMZN,BS6.SI
-
     String firstTicker = tickerList.get(0);
     String tickersString = "";
 
@@ -114,8 +106,6 @@ public class yhFinanceService {
             tickersString += ("," + tickerList.get(i));
         }
     }
-    System.out.printf("tickersString: %s\n", tickersString);
-
     String url = UriComponentsBuilder.fromUriString(urlGetStockPrice).path(firstTicker)
                                      .queryParam("range", "1d")
                                      .queryParam("interval", "1d")

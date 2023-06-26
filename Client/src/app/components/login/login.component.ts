@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
 
   content!: string
   divertPath !: string
+  pathList !: string[]
+  param: Record<string, string> = {}
 
   constructor(private authSvc:AuthService, private httpSvc: HttpService, 
               private actRoute: ActivatedRoute, private router: Router, 
@@ -20,34 +22,36 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.divertPath = this.actRoute.snapshot.params['path']
-    if(this.divertPath && localStorage.length>0){
-      this.localStorSvc.removeTokenInfo()
-      window.location.reload()
+    this.divertPath = decodeURI(this.divertPath)
+    this.pathList = this.divertPath.split(';')
+
+    if(this.pathList.length>1){
+      for(let i=1; i<this.pathList.length; i++){
+        const pathParam = this.pathList[i].split("=")
+        this.param[pathParam[0]] = pathParam[1]
+      }
     }
   }
 
   submit(username:string, password: string){
-    console.log("Username: ", username)
-    console.log("Password: ", password)
-
     this.authSvc.login(username, password)
           .then((data:any) => {
-            console.info("Data: ",data)
-            console.log("Access Token ", data["accessToken"])
-            console.log("Expiry Date: ", data["accessTokenExpiry"])
             // Set JWT into local Storage in browser
             this.localStorSvc.setToken(data)
-            
             alert("Login successfully!!!")
-              if(this.divertPath){
-                this.router.navigate([this.divertPath]).then(() => {
-                      window.location.reload();
-                  })
-              } else {
-                this.router.navigate(['home']).then(() => {
-                      window.location.reload();
-                  })
-              }
+            if(this.pathList.length == 1){
+              this.router.navigate([this.pathList[0]]).then(() => {
+                window.location.reload();
+            })
+            } else if(this.pathList.length>1){
+              this.router.navigate([this.pathList[0], this.param]).then(() => {
+                    window.location.reload();
+                })
+            } else {
+              this.router.navigate(['home']).then(() => {
+                    window.location.reload();
+                })
+            }
           })
             .catch(err => {
               console.info("Error: ",err)

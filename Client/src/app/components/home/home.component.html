@@ -37,7 +37,7 @@
                                 <th>Total Buy Amount ($)</th>
                                 <th>Total Buy Amount (unit)</th>
                                 <th>{{idx==0?'Total worth ($)' : 'Total return ($)' }}</th>
-                                <th>Current Price($)</th>
+                                <th>Prev Closing Price($)</th>
                             </tr>
                             <tr *ngFor="let summary of (idx==0? holdSummary: soldSummary)">
                                 <ng-container *ngIf="summary.currency == hold.currency">

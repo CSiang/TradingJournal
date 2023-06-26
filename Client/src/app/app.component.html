@@ -28,7 +28,8 @@
                                 </div>
                             </div>
                             <div class="drop-down-hidden">
-                                <button class="btn-dropDown" [routerLink]="'/profile'">Profile</button>
+                                <button class="btn-dropDown" [disabled]="!username" 
+                                    [routerLink]="'/profile'">Profile</button>
                                 <button class="btn-dropDown" [routerLink]="'/login'" [disabled]="username">Login</button>
                                 <button class="btn-dropDown" [disabled]="!username" (click)="logout()" [routerLink]="'/'">Logout</button>
                             </div>

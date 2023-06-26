@@ -19,7 +19,6 @@ public class Util {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-
     public SearchResult getSearchResult(JsonObject jo){
         
         SearchResult sr = new SearchResult();

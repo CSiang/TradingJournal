@@ -2,16 +2,12 @@ package tfip_project.financial_analysis.Security.Filters;
 
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,8 +28,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     
-    // @Value("${trading.app.jwtSecret}")
-    // private String secretKey;
     private String secretKey = "CS_TradingApp_SecretKey";
 
     Logger logger = Logger.getLogger(CustomAuthenticationFilter.class.getName());

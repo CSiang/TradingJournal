@@ -34,7 +34,7 @@ export class AppComponent implements OnInit{
   logout(){
     this.localStrSvc.removeTokenInfo()
     alert("You have been logged out successfully.")
-    this.router.navigate(['/']).then(() => {
+    this.router.navigate(['/login']).then(() => {
           window.location.reload();
       })
   }
