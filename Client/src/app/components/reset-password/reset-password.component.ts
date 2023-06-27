@@ -31,7 +31,7 @@ export class ResetPasswordComponent implements OnInit {
                 .then((res:any) => { alert("Password has been successfully reset!!!") 
                                      alert(res['message'])
                                      this.router.navigate(['/login']) })
-                .catch((err: any) => {alert(err['error']['message'])
+                .catch((err: any) => {alert(err.error['message'])
                                       this.router.navigate(['/forgetPassword']) })
   }
 

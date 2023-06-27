@@ -233,7 +233,7 @@ export class RecordsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.closeTrade$ =  this.httpSvc.closeTrade(this.sellRecord).subscribe({
               next: (data:any) => alert(data['message']),
-              error: (err:any) => alert(err['message']),
+              error: (err:any) => alert(err.error['message']),
               complete: () => document.getElementById("myForm")!.style.display = 'none'
             })
   }

@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
                               alert("Please login.")
                               this.router.navigate(['/login'])
           })
-        .catch( err => alert(err['message']) )
+        .catch( err => alert(err.error['message']) )
   }
 
 
