@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+src/main/resources/trading-journal-sb-d201ecfdf95b.json
 
 ### STS ###
 .apt_generated
